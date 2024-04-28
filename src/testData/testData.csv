@@ -1,2 +1,2 @@
 source,destination,date,operator,boardingPoint,droppingPoint,seatsCount,selectedSeats,customerName,email,mobile
-Bangalore,Chennai,21-Apr-2024,KPN Travels,Boarding Point,Dropping Point,2,seats-s2-3-4,John Doe,johndoe@example.com,1234567890
+Bangalore,Chennai,21-Apr-2024,KPN Travels,Boarding Point,Dropping Point,2,seats-s2-s3-s4,John Doe,johndoe@example.com,1234567890
