@@ -35,6 +35,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SeleniumBase implements Browser, Element {
 
@@ -380,13 +381,16 @@ public class SeleniumBase implements Browser, Element {
 
     public void startApp(String url) {
         try {
-            ChromeOptions options = new ChromeOptions();
-            //options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-            options.setExperimentalOption("useAutomationExtension", false);
-            options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
             //System.setProperty("webgetDriver().chrome.driver","./Drivers/chromegetDriver().exe");
             if (getDriver() == null) {
-                driver.set(new ChromeDriver(options));
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+                options.setExperimentalOption("useAutomationExtension", false);
+                options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+                options.addArguments("--remote-allow-origins=*");
+                ChromeDriver chromeDriver = new ChromeDriver(options);
+                driver.set(chromeDriver);
                 wait.set(new WebDriverWait(getDriver(), Duration.ofSeconds(30)));
                 builder = new Actions(getDriver());
                 getDriver().manage().window().maximize();
@@ -406,9 +410,11 @@ public class SeleniumBase implements Browser, Element {
         try {
             if (browser.equalsIgnoreCase("chrome")) {
                 //System.setProperty("webgetDriver().chrome.driver", "./Drivers/drivers/chromegetDriver().exe");
+                WebDriverManager.chromedriver().setup();
                 driver.set(new ChromeDriver());
             } else if (browser.equalsIgnoreCase("firefox")) {
                 //System.setProperty("webgetDriver().gecko.driver", "./Drivers/drivers/geckogetDriver().exe");
+                WebDriverManager.firefoxdriver().setup();
                 driver.set(new FirefoxDriver());
             } else if (browser.equalsIgnoreCase("IE")) {
                 //System.setProperty("webgetDriver().ie.driver", "./Drivers/drivers/IEDriverServer.exe");
